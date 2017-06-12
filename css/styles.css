@@ -27,7 +27,7 @@ body {
 .wrapper {
   width: 650px;
   text-align: center;
-  vertical-align: middle;  
+  vertical-align: middle;
 }
 
 
@@ -51,16 +51,16 @@ ul {
 
 }
 
-#city-name {
+#subject-name {
   color: black;
   background-color: white;
   height: 15.5%;
   width: 75%;
-  border-radius: 5px;  
+  border-radius: 5px;
   margin-bottom: 5%;
 }
 
-#city-name:focus {
+#subject-name:focus {
   outline: none;
   box-shadow: 0 0 10px rgba(49, 79, 111, 0.2);
 }
