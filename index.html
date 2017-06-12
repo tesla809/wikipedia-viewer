@@ -1,0 +1,93 @@
+<html>
+    <head>
+      <title>Weather App</title>
+      <meta charset="UTF-8">
+      <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,100,300' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+      <link rel="stylesheet" href="css/font.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="weather-icons/css/weather-icons-wind.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="weather-icons/css/weather-icons.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <meta name="viewport" content="initial-scale=1">
+    </head>
+
+  <body>
+    <div class="container-fluid wrapper">
+        <!-- Header -->
+      <div class= "titles page-header text-center">
+        <div id='heading-title'>Weather</div>
+        <div id='heading-title'>Underground</div>
+      </div>
+
+        <!-- New City Dock -->
+        <!-- city form is wrapper that wraps around measurement toggle and search bar -->
+        <form class='text-center' id='city-form'>
+          <label>City</label>
+          <!-- wraps around seach area and measurements -->
+          <div id="search-space">
+            <!-- search area -->
+            <input name="city" placeholder=" " id="city-name">
+            <i id="submit" class="fa fa-2x fa-search" aria-hidden="true"></i>
+          </div>
+
+          <!-- use rows to make it responsive -->
+          <!-- measurement toggle, still part of search space -->
+          <div id="measurement">
+            <div class="flip-switch-container">
+              <!-- one is the slider spot -->
+              <div class="slider">
+                <!-- the other is the switch -->
+                <!-- value holds state -->
+                <div id="widget-2" class="flipswitch" value="true"></div>
+              </div>
+            </div>
+          </div>
+          <!--
+          keep to fix jquery for now
+          Imperial <input type="radio" name="standard" value="fahrenheit" id="imperial" class="standard-class" checked>
+          Metric <input type="radio" name="standard" value="celsius" id="metric" >
+          -->
+        </form>
+
+        <!-- Weather Dock -->
+        <div id="weather-dock">
+          <div class="row">
+            <ul>
+
+               <li class="weather-dock-line">
+                <i class="wi wi-thermometer weather-icon"></i>
+                <div id="temperture" class="data"></div>
+              </li>
+
+              <li class="weather-dock-line">
+                <i class="wi wi-humidity weather-icon"></i>
+                <div id="humidity" class="data"></div>
+              </li>
+
+              <li class="weather-dock-line">
+                <i class="wi wi-cloudy weather-icon"></i>
+                <div id="sky" class="data"></div>
+              </li>
+
+              <li class="weather-dock-line">
+              <i class="wi wi-cloudy-gusts weather-icon"></i>
+                <div id="wind" class="data"></div>
+              </li>
+
+              <li class="weather-dock-line">
+                <div id='variable-weather-condition-icon'></div>
+                <div id="condition" class="data"></div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+    </div>
+
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+</html>
