@@ -5,6 +5,10 @@ features to add:
 - add api search from wikipedia
 - add functionality to random search
 - add styling to random search.
+- When info is fetched, the search screen fades
+and the search list is found.
+- at the very top the search and random icons can be hovered
+over to get search and get new subjects.
 - Get inspiration from codedoodl.es for UI ideas.
 - modularize and turn into anonymous functions
 - error handler for subject not found
@@ -14,36 +18,15 @@ features to add:
 var $subjectSearchField = $('#subject-name');
 var $subjectSearch = $('#subject-name').val();
 var $submitButton = $('#submit');
-
-// anon function to find location
-// use this to determine language.
-(function(){
-  // one method of finding current location based on IP
-  var findLocation = function(){
-  // location address API
-  // corsorigin.me to get around CORS issues in codepen
-  var getLocationAPI = 'http://ipinfo.io';
-  // success callback
-  function locationSuccess(data){
-    var location = data.city.toString() + ", " + data.country.toString();
-    // add location to field
-    $subjectSearchField.val(location);
-  }
-  // actual JSON call
-  $.getJSON(getLocationAPI,locationSuccess);
-}; // end findLocation
-
-// gets location and weather of current location
-var currentLocation = findLocation();
-currentLocal = currentLocation;
-
-// Calls for location
-wikipediaQuery(currentLocation);
-})();
+// changes later with detection
+var language = 'en';
+// if location search needed,
+// get iffe function from weather app
+// and place here
 
 // query API here- get info here
 function wikipediaQuery(subject){
-  var wikipediaAPI = 'http://api.openweathermap.org/data/2.5/weather?';
+  var wikipediaAPI = '...';
   var subjectLookup = "q=" + subject;
   var apiKey = "&APPID=...";
   var wikipediaPath = wikipediaAPI + subjectLookup + apiKey;
@@ -57,13 +40,14 @@ function wikipediaQuery(subject){
 // insert query data here
 function populateData(){
   // ...
+  // console.log()
 }
 
 var searchAction = function(evt){
   // disable search until we get data
   $subjectSearchField.prop("disabled", true);
 
-  //query the subject
+  //query the subject- why did I do this?
   $subjectSearch = $('#subject-name').val();
   wwikipediaQuery($subjectSearch);
 };
@@ -80,5 +64,3 @@ $($subjectSearchField).on('keyup keypress', function(evt) {
     return false;
   }
 });
-
-// background chanage based on weather
