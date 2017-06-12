@@ -8,6 +8,7 @@ features to add:
 and the search list is found.
 - at the very top the search and random icons can be hovered
 over to get search and get new subjects.
+- fix reponsive resizing
 - Get inspiration from codedoodl.es for UI ideas.
 - modularize and turn into anonymous functions
 - error handler for subject not found
@@ -24,6 +25,14 @@ var language = 'en';
 // get iffe function from weather app
 // and place here
 
+// this is where query info goes.
+// insert query data here
+function processWikiData(data, status, xhr){
+  var actualData = data;
+  console.log(data);
+  console.log(actualData);
+}
+
 // query API here- get info here
 function wikipediaQuery(subject){
   // convert string to percent encoding
@@ -33,10 +42,11 @@ function wikipediaQuery(subject){
   var action = 'action=query';
   var subjectLookup = "&titles=" + subject;
   var prop = '&prop=revisions';
-  var rvProp = '&rvprop=content'
-  var format = '&format=json'
+  var rvProp = '&rvprop=content';
+  var format = '&format=json';
+  var origin = '&origin=*';
   var wikipediaPath = wikipediaEndPoint + action + subjectLookup
-                      + prop + format + rvProp + format;
+                      + prop + format + rvProp + format + origin;
 
   // when successful, search button allowed again
   $subjectSearchField.prop("disabled", false);
@@ -44,15 +54,8 @@ function wikipediaQuery(subject){
   // get data and display it in console.log
   console.log(wikipediaPath);
 
-  return wikipediaPath;
-}
-
-
-// this is where query info goes.
-// insert query data here
-function populateData(){
-  // ...
-  // console.log()
+  // get data and do something with it
+  $.getJSON(wikipediaPath, processWikiData);
 }
 
 var searchAction = function(evt){
