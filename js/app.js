@@ -1,17 +1,12 @@
 /*
 features to add:
+- re name variables to match task.
+- add api search from wikipedia
+- add functionality to random search
+- add styling to random search.
+
 - modularize and turn into anonymous functions
-- add rest of info needed
-
-- style up to look better
-  -fix weather dock to look better
-  -better font
-  -background style cartoony to match weather
-    - pick color templates
-
-  - how to add map to weather map
-
-- error handler for city not found
+- error handler for subject not found
 */
 
 // global variables
@@ -68,7 +63,7 @@ weatherQuery(currentLocation);
     var spaceMove = 170;
     var imperialColor = "black";
     var metricColor = "rgb(121,170,225)";
-    
+
     //if state is true, then move left to off
     if ($clickedSwitch.attr('value') === 'true') {
       $($clickedSwitch).animate({
@@ -80,7 +75,7 @@ weatherQuery(currentLocation);
     } // if off, go back to 1st state.
     else if ($clickedSwitch.attr('value') === 'false') {
       $($clickedSwitch).animate({
-        //subtract movement 
+        //subtract movement
           left: spaceMove-spaceMove
         })
         .css("background-color", imperialColor)
@@ -148,7 +143,7 @@ function weatherQuery(city){
       'light intensity shower rain' : 'wi-rain-wind',
       'heavy intensity shower rain': 'wi-rain-wind',
       'ragged shower rain' : 'wi-rain-wind',
-      
+
       'snow' : 'wi-day-snow',
       'light snow' : 'wi-day-snow',
       'heavy snow': 'wi-snow-wind',
@@ -218,13 +213,13 @@ function weatherQuery(city){
     var weatherObj;
     var condition;
     var variableWeather;
-    
+
     // a hack to clean the data
     // turn to string, eliminate the [] then turn into object again
     for(var x = 1; x < weather.length - 1; x++){
       weatherHolder += weather[x];
     }
-    
+
     // getting description for weather object
     weatherObj = JSON.parse(weatherHolder);
     condition = weatherObj.main;
@@ -242,7 +237,7 @@ function weatherQuery(city){
     }
 
 
-    // add info to weather dock 
+    // add info to weather dock
     $temperture.html(temp);
     $humidity.html(humidity);
     $sky.html(clouds);
@@ -250,7 +245,7 @@ function weatherQuery(city){
     $condition.html(condition);
     $variableWeatherConditionIcon.html("<i class='wi weather-icon " + variableWeather +" 'id='variable-weather-condition-icon'></i>");
   }
-    
+
   // API callback
   $.getJSON(openWeatherPath, openWeatherAPISuccess);
 } // end weatherQuery
@@ -280,13 +275,12 @@ $($submitButton).click(function(evt){
 
 $($citySearchField).on('keyup keypress', function(evt) {
   var keyCode = evt.keyCode || evt.which;
-  if (keyCode === 13) { 
+  if (keyCode === 13) {
     evt.preventDefault();
-    searchAction(evt);  
+    searchAction(evt);
     return false;
   }
 });
 
 
 // background chanage based on weather
-
