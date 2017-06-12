@@ -11,8 +11,8 @@ features to add:
 */
 
 // global variables
-var $subjectSearchField = $('#city-name');
-var $subjectSearch = $('#city-name').val();
+var $subjectSearchField = $('#subject-name');
+var $subjectSearch = $('#subject-name').val();
 var $submitButton = $('#submit');
 
 // anon function to find location
@@ -64,7 +64,7 @@ var searchAction = function(evt){
   $subjectSearchField.prop("disabled", true);
 
   //query the subject
-  $subjectSearch = $('#city-name').val();
+  $subjectSearch = $('#subject-name').val();
   wwikipediaQuery($subjectSearch);
 };
 // Run when go clicked and new location submitted
