@@ -1,8 +1,7 @@
 /*
 features to add:
-- re name variables to match task.
-- figure out best way to get ideal language for person
 - add api search from wikipedia
+- figure out best way to get ideal language for person
 - add functionality to random search
 - add styling to random search.
 - When info is fetched, the search screen fades
@@ -20,16 +19,28 @@ var $subjectSearch = $('#subject-name').val();
 var $submitButton = $('#submit');
 // changes later with detection
 var language = 'en';
+
 // if location search needed,
 // get iffe function from weather app
 // and place here
 
 // query API here- get info here
 function wikipediaQuery(subject){
-  var wikipediaAPI = '...';
-  var subjectLookup = "q=" + subject;
-  var apiKey = "&APPID=...";
-  var wikipediaPath = wikipediaAPI + subjectLookup + apiKey;
+  // add percent encoding conversion with regex if necessary?
+  // ...
+
+  // construct path
+  var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?';
+  var action = 'action=query';
+  var subjectLookup = "&titles=" + subject;
+  var prop = '&prop=revisions';
+  var rvProp = '&rvprop=content'
+  var format = '&format=json'
+  var wikipediaPath = wikipediaEndPoint + action + subjectLookup
+                      + prop + format + rvProp + format;
+
+  // get data and display it in console.log
+  console.log(wikipediaPath);
 
   // when successful, search button allowed again
   // $subjectSearchField.prop("disabled", false);
