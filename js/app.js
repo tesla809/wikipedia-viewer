@@ -44,7 +44,7 @@ over to get search and get new subjects.
   var makeJSONCall = function(endpointAddress, callback){
     $.ajax({
       url: endpointAddress,
-      dataType: "jsonp",
+      dataType: "json",
       success: callback,
       error: function () {
         console.log("Error retrieving search results, please refresh the page");
@@ -91,9 +91,7 @@ over to get search and get new subjects.
   });
 
   $($randomSearchButton).click(function(evt){
-    var addressForRandomSubject = 'https://en.wikipedia.org/wiki/Special:Random?';
-    var callback = 'callback=?';
-    var randomWikipediaPath = addressForRandomSubject + callback;
+    var addressForRandomSubject = 'https://en.wikipedia.org/wiki/Special:Random';
     makeJSONCall(addressForRandomSubject, processWikiData);
   });
 
