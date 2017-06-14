@@ -24,7 +24,8 @@ over to get search and get new subjects.
   // global variables
   var $subjectSearchField = $('#subject-name');
   var $subjectSearch = $('#subject-name').val();
-  var $submitButton = $('#submit');
+  var $submitButton = $('#submitSearchButton');
+  var $randomSearchButton = $('#randomSearchButton');
   // changes later with detection
   var language = 'en';
 
@@ -40,6 +41,17 @@ over to get search and get new subjects.
     console.log(actualData);
   }
 
+  var makeJSONCall = function(endpointAddress, callback){
+    $.ajax({
+      url: endpointAddress,
+      dataType: "jsonp",
+      success: callback,
+      error: function () {
+        console.log("Error retrieving search results, please refresh the page");
+      }
+    });
+  }
+
   // query API here- get info here
   function wikipediaQuery(subject){
     // convert string to percent encoding
@@ -50,7 +62,7 @@ over to get search and get new subjects.
     var searchLookup = '&search=' + subject;
     var limit = '&limit=25';
     var format = '&format=json';
-    var callback = '&callback=?'
+    var callback = '&callback=?';
     var wikipediaPath = wikipediaEndPoint + action + searchLookup + limit
                         + format + callback;
 
@@ -61,7 +73,7 @@ over to get search and get new subjects.
     console.log(wikipediaPath);
 
     // get data and do something with it
-    $.getJSON(wikipediaPath, processWikiData);
+    makeJSONCall(wikipediaPath, processWikiData);
   }
 
   var searchAction = function(evt){
@@ -72,9 +84,17 @@ over to get search and get new subjects.
     $subjectSearch = $('#subject-name').val();
     wikipediaQuery($subjectSearch);
   };
-  // Run when go clicked and new location submitted
+
+  // Run when search button clicked and new subject submitted
   $($submitButton).click(function(evt){
     searchAction(evt);
+  });
+
+  $($randomSearchButton).click(function(evt){
+    var addressForRandomSubject = 'https://en.wikipedia.org/wiki/Special:Random?';
+    var callback = 'callback=?';
+    var randomWikipediaPath = addressForRandomSubject + callback;
+    makeJSONCall(addressForRandomSubject, processWikiData);
   });
 
   // Press Enter button for search
