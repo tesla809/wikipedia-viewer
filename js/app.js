@@ -49,12 +49,10 @@ over to get search and get new subjects.
     var action = 'action=opensearch';
     var searchLookup = '&search=' + subject;
     var limit = '&limit=25';
-    var prop = '&prop=revisions';
-    var rvProp = '&rvprop=content';
     var format = '&format=json';
-    var origin = '&origin=*';
+    var callback = '&callback=?'
     var wikipediaPath = wikipediaEndPoint + action + searchLookup + limit
-                        + prop + format + rvProp + format + origin;
+                        + format + callback;
 
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
