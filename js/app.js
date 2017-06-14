@@ -5,13 +5,15 @@ features to add:
 - figure out best way to get ideal language for person
 - add functionality to random search
 - add styling to random search.
+
+Style:
+-Add wikipedia icon in back
 - When info is fetched, the search screen fades
 and the search list is found.
 - at the very top the search and random icons can be hovered
 over to get search and get new subjects.
 - fix reponsive resizing
 - Get inspiration from codedoodl.es for UI ideas.
-- modularize and turn into anonymous functions
 - error handler for subject not found
 
 - see: https://www.mediawiki.org/wiki/API:Main_page#The_endpoint
@@ -27,8 +29,7 @@ over to get search and get new subjects.
   var language = 'en';
 
   // if location search needed,
-  // get iffe function from weather app
-  // and place here
+  // get iffe function from weather app and place here
 
   // this is where query info goes.
   // insert query data here
@@ -36,7 +37,7 @@ over to get search and get new subjects.
   // see at 10:12
   function processWikiData(data, status, xhr){
     var actualData = data;
-    console.log(actualData.query.pages);
+    console.log(actualData);
   }
 
   // query API here- get info here
@@ -45,13 +46,14 @@ over to get search and get new subjects.
     subject = encodeURIComponent(subject);
     // construct path
     var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?';
-    var action = 'action=query';
-    var subjectLookup = "&titles=" + subject;
+    var action = 'action=opensearch';
+    var searchLookup = '&search=' + subject;
+    var limit = '&limit=25';
     var prop = '&prop=revisions';
     var rvProp = '&rvprop=content';
     var format = '&format=json';
     var origin = '&origin=*';
-    var wikipediaPath = wikipediaEndPoint + action + subjectLookup
+    var wikipediaPath = wikipediaEndPoint + action + searchLookup + limit
                         + prop + format + rvProp + format + origin;
 
     // when successful, search button allowed again
