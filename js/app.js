@@ -37,14 +37,16 @@ over to get search and get new subjects.
   // https://www.youtube.com/watch?v=pn5eOoJF8bw
   // see at 10:12
   function processWikiData(data, status, xhr){
-    var actualData = data;
-    console.log(actualData);
+    console.log(data);
   }
 
   var makeJSONCall = function(endpointAddress, callback){
+    callback = callback || function(x) { console.log(x); }
     $.ajax({
       url: endpointAddress,
-      dataType: "json",
+      type: 'GET',
+      dataType: "jsonp",
+      contentType: 'json',
       success: callback,
       error: function () {
         console.log("Error retrieving search results, please refresh the page");
@@ -91,8 +93,20 @@ over to get search and get new subjects.
   });
 
   $($randomSearchButton).click(function(evt){
-    var addressForRandomSubject = 'https://en.wikipedia.org/wiki/Special:Random';
-    makeJSONCall(addressForRandomSubject, processWikiData);
+    // refactor this
+    var addressForRandomSubject = 'https://' + language + '.wikipedia.org/w/api.php?'
+    + 'action=query'
+    + '&prop=info'
+    + '&inprop=url'
+    + '&inprop=displaytitle'
+    + '&list=random'
+    + '&rnnamespace=0'
+    + '&rnlimit=1'
+    + '&rnfilterredir=nonredirects'
+    + '&format=json'
+    + '&origin=*';
+
+    var randomSubject = makeJSONCall(addressForRandomSubject);
   });
 
   // Press Enter button for search
