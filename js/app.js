@@ -54,6 +54,14 @@ over to get search and get new subjects.
     });
   }
 
+  function randomSubjectPopulate(randomSubjectAddress){
+    $.getJSON(randomSubjectAddress).done(function(x){
+      var randomSubject = x.query.random[0].title;
+      console.log(randomSubject);
+      wikipediaQuery(randomSubject, processWikiData);
+    });
+  }
+
   // query API here- get info here
   function wikipediaQuery(subject){
     // convert string to percent encoding
@@ -92,10 +100,6 @@ over to get search and get new subjects.
     searchAction(evt);
   });
 
-  var randomSubjectPopulate = function(x){
-    console.log(x);
-  }
-
   $($randomSearchButton).click(function(evt){
     // refactor this
     var addressForRandomSubject = 'https://' + language + '.wikipedia.org/w/api.php?'
@@ -110,12 +114,7 @@ over to get search and get new subjects.
     + '&format=json'
     + '&origin=*';
 
-    // refactor
-    $.getJSON(addressForRandomSubject).done(function(x){
-      var randomSubject = x.query.random[0].title;
-      console.log(randomSubject)
-      wikipediaQuery(randomSubject, processWikiData);
-    });
+    randomSubjectPopulate(addressForRandomSubject);
   });
 
   // Press Enter button for search
