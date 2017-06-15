@@ -71,14 +71,14 @@ over to get search and get new subjects.
 
     $.getJSON(addressForRandomSubject).done(function(x){
       var randomSubject = x.query.random[0].title;
-      console.log(randomSubject);
       wikipediaQuery(randomSubject, processWikiData);
     });
   }
 
   // query API here- get info here
   function wikipediaQuery(subject){
-    subject = subject || randomSubject
+    // for now, if no info entered, get random subject
+    subject = subject || randomSubjectPopulate();
     // convert string to percent encoding
     subject = encodeURIComponent(subject);
     // construct path
@@ -93,10 +93,7 @@ over to get search and get new subjects.
 
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
-
-    // get data and display it in console.log
-    console.log(wikipediaPath);
-
+    
     // get data and do something with it
     makeJSONCall(wikipediaPath, processWikiData);
   }
@@ -104,7 +101,6 @@ over to get search and get new subjects.
   var searchAction = function(evt){
     // disable search until we get data
     $subjectSearchField.prop("disabled", true);
-
     //query the subject- why did I do this?
     $subjectSearch = $('#subject-name').val();
     wikipediaQuery($subjectSearch);
@@ -114,8 +110,6 @@ over to get search and get new subjects.
   $($submitButton).click(function(evt){
     searchAction(evt);
   });
-
-
 
   $($randomSearchButton).click(function(evt){
     randomSubjectPopulate();
