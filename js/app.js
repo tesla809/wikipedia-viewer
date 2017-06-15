@@ -92,6 +92,10 @@ over to get search and get new subjects.
     searchAction(evt);
   });
 
+  var randomSubjectPopulate = function(x){
+    console.log(x);
+  }
+
   $($randomSearchButton).click(function(evt){
     // refactor this
     var addressForRandomSubject = 'https://' + language + '.wikipedia.org/w/api.php?'
@@ -106,7 +110,12 @@ over to get search and get new subjects.
     + '&format=json'
     + '&origin=*';
 
-    var randomSubject = makeJSONCall(addressForRandomSubject);
+    // refactor
+    $.getJSON(addressForRandomSubject).done(function(x){
+      var randomSubject = x.query.random[0].title;
+      console.log(randomSubject)
+      wikipediaQuery(randomSubject, processWikiData);
+    });
   });
 
   // Press Enter button for search
