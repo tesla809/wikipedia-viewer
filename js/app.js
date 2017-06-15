@@ -40,7 +40,7 @@ over to get search and get new subjects.
     console.log(data);
   }
 
-  var makeJSONCall = function(endpointAddress, callback){
+  function makeJSONCall(endpointAddress, callback){
     callback = callback || function(x) { console.log(x); }
     $.ajax({
       url: endpointAddress,
