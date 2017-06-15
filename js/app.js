@@ -1,6 +1,6 @@
 /*
 features to add:
-- add api search from wikipedia
+- create default parameter in case button is pressed.
 - get data out of json response.
 - figure out best way to get ideal language for person
 - add functionality to random search
@@ -37,7 +37,9 @@ over to get search and get new subjects.
   // https://www.youtube.com/watch?v=pn5eOoJF8bw
   // see at 10:12
   function processWikiData(data, status, xhr){
-    console.log(data);
+    console.log(data[0]);
+    console.log(data[1]);
+    console.log(data[2]);
   }
 
   function makeJSONCall(endpointAddress, callback){
@@ -54,8 +56,20 @@ over to get search and get new subjects.
     });
   }
 
-  function randomSubjectPopulate(randomSubjectAddress){
-    $.getJSON(randomSubjectAddress).done(function(x){
+  function randomSubjectPopulate(){
+    var addressForRandomSubject = 'https://' + language + '.wikipedia.org/w/api.php?'
+    + 'action=query'
+    + '&prop=info'
+    + '&inprop=url'
+    + '&inprop=displaytitle'
+    + '&list=random'
+    + '&rnnamespace=0'
+    + '&rnlimit=1'
+    + '&rnfilterredir=nonredirects'
+    + '&format=json'
+    + '&origin=*';
+
+    $.getJSON(addressForRandomSubject).done(function(x){
       var randomSubject = x.query.random[0].title;
       console.log(randomSubject);
       wikipediaQuery(randomSubject, processWikiData);
@@ -64,6 +78,7 @@ over to get search and get new subjects.
 
   // query API here- get info here
   function wikipediaQuery(subject){
+    subject = subject || randomSubject
     // convert string to percent encoding
     subject = encodeURIComponent(subject);
     // construct path
@@ -100,21 +115,10 @@ over to get search and get new subjects.
     searchAction(evt);
   });
 
-  $($randomSearchButton).click(function(evt){
-    // refactor this
-    var addressForRandomSubject = 'https://' + language + '.wikipedia.org/w/api.php?'
-    + 'action=query'
-    + '&prop=info'
-    + '&inprop=url'
-    + '&inprop=displaytitle'
-    + '&list=random'
-    + '&rnnamespace=0'
-    + '&rnlimit=1'
-    + '&rnfilterredir=nonredirects'
-    + '&format=json'
-    + '&origin=*';
 
-    randomSubjectPopulate(addressForRandomSubject);
+
+  $($randomSearchButton).click(function(evt){
+    randomSubjectPopulate();
   });
 
   // Press Enter button for search
