@@ -1,10 +1,8 @@
 /*
 features to add:
-- create default parameter in case button is pressed.
 - get data out of json response.
 - figure out best way to get ideal language for person
-- add functionality to random search
-- add styling to random search.
+- get better default parameter.
 
 Style:
 -Add wikipedia icon in back
@@ -82,20 +80,18 @@ over to get search and get new subjects.
     // convert string to percent encoding
     subject = encodeURIComponent(subject);
     // construct path
-    var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?';
-    var action = 'action=opensearch';
-    var searchLookup = '&search=' + subject;
-    var limit = '&limit=25';
-    var format = '&format=json';
-    var callback = '&callback=?';
-    var wikipediaPath = wikipediaEndPoint + action + searchLookup + limit
-                        + format + callback;
+    var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?'
+    + 'action=opensearch'
+    + '&search=' + subject
+    + '&limit=25'
+    + '&format=json'
+    + '&callback=?';
 
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
-    
+
     // get data and do something with it
-    makeJSONCall(wikipediaPath, processWikiData);
+    makeJSONCall(wikipediaEndPoint, processWikiData);
   }
 
   var searchAction = function(evt){
