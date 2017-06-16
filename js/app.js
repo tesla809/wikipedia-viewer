@@ -27,14 +27,20 @@ over to get search and get new subjects.
   // changes later with detection
   var language = 'en';
 
+  // get results dock div
+  var $resultsDock = $('#results-dock');
+
   // if location search needed,
   // get iffe function from weather app and place here
-
   // this is where query info goes.
   // insert query data here
   // https://www.youtube.com/watch?v=pn5eOoJF8bw
   // see at 10:12
   function processWikiData(data, status, xhr){
+    // var pagesResults = $('<div id="pageResults"></div>');
+    // $resultsDock.append(pagesResults);
+    //
+    // console.log($resultsDock);
     console.log(data[0]);
     console.log(data[1]);
     console.log(data[2]);
@@ -75,8 +81,6 @@ over to get search and get new subjects.
 
   // query API here- get info here
   function wikipediaQuery(subject){
-    // for now, if no info entered, get random subject
-    subject = subject || randomSubjectPopulate();
     // convert string to percent encoding
     subject = encodeURIComponent(subject);
     // construct path
@@ -94,6 +98,20 @@ over to get search and get new subjects.
     makeJSONCall(wikipediaEndPoint, processWikiData);
   }
 
+  function handleSearch(evt){
+    // get value of subject name
+    $subjectSearch = $('#subject-name').val();
+    // if value is blank alert
+    if($subjectSearch === ''){
+      console.log('!');
+      $subjectSearchField.css('background-color','rgba(255,215,0,0.3)');
+    }
+    else {
+      $subjectSearchField.css('background-color','white');
+      searchAction(evt);
+    }
+  }
+
   var searchAction = function(evt){
     // disable search until we get data
     $subjectSearchField.prop("disabled", true);
@@ -104,7 +122,7 @@ over to get search and get new subjects.
 
   // Run when search button clicked and new subject submitted
   $($submitButton).click(function(evt){
-    searchAction(evt);
+    handleSearch(evt);
   });
 
   $($randomSearchButton).click(function(evt){
