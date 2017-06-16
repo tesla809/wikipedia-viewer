@@ -87,11 +87,24 @@ over to get search and get new subjects.
     subject = encodeURIComponent(subject);
     // construct path
     var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?'
-    + 'action=opensearch'
-    + '&search=' + subject
-    + '&limit=25'
+    + 'action=query'
     + '&format=json'
-    + '&callback=?';
+    + '&prop=pageimages'
+    + '&titles=' + subject;
+    + '&piprop=thumbnail%7Cname'
+    + '&pithumbsize=100';
+
+    // better string search
+    ///w/api.php?action=query&format=json&prop=pageimages%7Cinfo%7Cextracts&meta=&continue=gapcontinue%7C%7C&generator=allpages&piprop=thumbnail%7Cname&pithumbsize=60&inprop=url%7Cdisplaytitle&exsentences=3&exintro=1&explaintext=1&exsectionformat=plain&gapfrom=Allah&gapcontinue=Allah-Las&gapfilterredir=nonredirects
+
+    // first attempt with open search, no pictures, would have to make 2 calls
+    // this and then wait on the other call for images.
+    // if no images then we can just use this
+    // + 'action=opensearch'
+    // + '&search=' + subject
+    // + '&limit=25'
+    // + '&format=json'
+    // + '&callback=?';
 
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
