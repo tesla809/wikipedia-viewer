@@ -1,5 +1,6 @@
 /*
 features to add:
+- request links and photos as well
 - get data out of json response.
 - figure out best way to get ideal language for person
 - get better default parameter.
@@ -39,11 +40,12 @@ over to get search and get new subjects.
   function processWikiData(data, status, xhr){
     // var pagesResults = $('<div id="pageResults"></div>');
     // $resultsDock.append(pagesResults);
-    //
     // console.log($resultsDock);
+    console.log(data);
     console.log(data[0]);
     console.log(data[1]);
     console.log(data[2]);
+    console.log(data[3]);
   }
 
   function makeJSONCall(endpointAddress, callback){
@@ -103,7 +105,6 @@ over to get search and get new subjects.
     $subjectSearch = $('#subject-name').val();
     // if value is blank alert
     if($subjectSearch === ''){
-      console.log('!');
       $subjectSearchField.css('background-color','rgba(255,215,0,0.3)');
     }
     else {
@@ -128,6 +129,13 @@ function searchAction(evt){
   $($randomSearchButton).click(function(evt){
     randomSubjectPopulate();
   });
+
+// turn subjectSearchField to white on focus if not white
+$($subjectSearchField).on('focus', function(evt) {
+  if($subjectSearchField.css('background-color') === 'rgba(255, 215, 0, 0.3)'){
+    $subjectSearchField.css('background-color', 'white');
+  }
+});
 
   // Press Enter button for search
   $($subjectSearchField).on('keyup keypress', function(evt) {
