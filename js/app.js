@@ -90,12 +90,19 @@ over to get search and get new subjects.
     + 'action=query'
     + '&format=json'
     + '&prop=pageimages'
-    + '&titles=' + subject;
-    + '&piprop=thumbnail%7Cname'
-    + '&pithumbsize=100';
-
-    // better string search
-    ///w/api.php?action=query&format=json&prop=pageimages%7Cinfo%7Cextracts&meta=&continue=gapcontinue%7C%7C&generator=allpages&piprop=thumbnail%7Cname&pithumbsize=60&inprop=url%7Cdisplaytitle&exsentences=3&exintro=1&explaintext=1&exsectionformat=plain&gapfrom=Allah&gapcontinue=Allah-Las&gapfilterredir=nonredirects
+    + '%7Cinfo%7Cextracts'
+    + '&meta=&continue=gapcontinue%7C%7C'
+    + '&generator=allpages'
+    + '&utf8=1&piprop=thumbnail%7Cname'
+    + '&pithumbsize=100'
+    + '&inprop=url%7Cdisplaytitle'
+    + '&exsentences=3'
+    + '&exintro=1'
+    + '&explaintext=1'
+    + '&exsectionformat=plain'
+    + '&gapfrom=' + subject
+    + '&gapfilterredir=nonredirects'
+    + '&gaplimit=25';
 
     // first attempt with open search, no pictures, would have to make 2 calls
     // this and then wait on the other call for images.
@@ -109,6 +116,9 @@ over to get search and get new subjects.
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
 
+    // to json
+    var strin = wikipediaEndPoint;
+    console.log(strin);
     // get data and do something with it
     makeJSONCall(wikipediaEndPoint, processWikiData);
   }
