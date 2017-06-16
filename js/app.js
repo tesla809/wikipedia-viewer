@@ -112,7 +112,7 @@ over to get search and get new subjects.
     }
   }
 
-  var searchAction = function(evt){
+function searchAction(evt){
     // disable search until we get data
     $subjectSearchField.prop("disabled", true);
     //query the subject- why did I do this?
