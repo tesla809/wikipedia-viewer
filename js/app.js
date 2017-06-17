@@ -41,11 +41,28 @@ over to get search and get new subjects.
     // var pagesResults = $('<div id="pageResults"></div>');
     // $resultsDock.append(pagesResults);
     // console.log($resultsDock);
-    console.log(data);
-    console.log(data[0]);
-    console.log(data[1]);
-    console.log(data[2]);
-    console.log(data[3]);
+    var results = data.query.pages;
+    var resultsKeysArr = Object.keys(results);
+    var articleMetaInfo = results[resultsKeysArr[0]];
+    var articleLink = articleMetaInfo.canonicalurl;
+    var articleTitle = articleMetaInfo.title;
+    var articleSummary = articleMetaInfo.extract;
+    var articleImage = articleMetaInfo.original;
+    var articleImageSource = articleImage.source;
+    var articleImageDimensions = {
+      height: articleImage.height,
+      width: articleImage.width
+    };
+
+    console.log(results);
+    console.log(articleMetaInfo);
+    console.log(articleLink);
+    console.log(articleTitle);
+    console.log(articleSummary);
+    console.log(articleImage);
+    console.log(articleImageSource);
+    console.log(articleImageDimensions);
+
   }
 
   function makeJSONCall(endpointAddress, callback){
@@ -93,7 +110,8 @@ over to get search and get new subjects.
     + '%7Cinfo%7Cextracts'
     + '&meta=&continue=gapcontinue%7C%7C'
     + '&generator=allpages'
-    + '&utf8=1&piprop=thumbnail%7Cname'
+    + '&utf8=1'
+    + '&piprop=name%7Coriginal'
     + '&pithumbsize=100'
     + '&inprop=url%7Cdisplaytitle'
     + '&exsentences=3'
@@ -103,6 +121,8 @@ over to get search and get new subjects.
     + '&gapfrom=' + subject
     + '&gapfilterredir=nonredirects'
     + '&gaplimit=25';
+
+// /w/api.php?action=query&format=json&prop=pageimages%7Cinfo%7Cextracts&continue=gapcontinue%7C%7C&generator=allpages&utf8=1&piprop=name%7Coriginal&inprop=url%7Cdisplaytitle&exsentences=3&exintro=1&explaintext=1&exsectionformat=wiki&gapfrom=Allah&gapcontinue=Allah-Las&gapfilterredir=nonredirects&gaplimit=10
 
     // first attempt with open search, no pictures, would have to make 2 calls
     // this and then wait on the other call for images.
