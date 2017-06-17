@@ -43,26 +43,47 @@ over to get search and get new subjects.
     // console.log($resultsDock);
     var results = data.query.pages;
     var resultsKeysArr = Object.keys(results);
-    var articleMetaInfo = results[resultsKeysArr[0]];
-    var articleLink = articleMetaInfo.canonicalurl;
-    var articleTitle = articleMetaInfo.title;
-    var articleSummary = articleMetaInfo.extract;
-    var articleImage = articleMetaInfo.original;
-    var articleImageSource = articleImage.source;
-    var articleImageDimensions = {
-      height: articleImage.height,
-      width: articleImage.width
-    };
+    var articleMetaInfo;
+    var articleLink;
+    var articleTitle;
+    var articleSummary;
+    var articleImage;
+    var articleImageSource;
+    var articleImageDimensions;
 
     console.log(results);
-    console.log(articleMetaInfo);
-    console.log(articleLink);
-    console.log(articleTitle);
-    console.log(articleSummary);
-    console.log(articleImage);
-    console.log(articleImageSource);
-    console.log(articleImageDimensions);
 
+    for (var i = 0; i < resultsKeysArr.length; i++){
+      articleMetaInfo = results[resultsKeysArr[i]];
+      articleLink = articleMetaInfo.canonicalurl;
+      articleTitle = articleMetaInfo.title;
+      articleSummary = articleMetaInfo.extract;
+      console.log(articleMetaInfo);
+      console.log(articleLink);
+      console.log(articleTitle);
+      console.log(articleSummary);
+
+      // check if has image
+      if (articleMetaInfo.hasOwnProperty('original')){
+        articleImage = articleMetaInfo.original;
+        articleImageSource = articleImage.source;
+        articleImageDimensions = {
+          height: articleImage.height,
+          width: articleImage.width
+        };
+        console.log(articleImage);
+        console.log(articleImageSource);
+        console.log(articleImageDimensions);
+      } else {
+        // add default image
+        // ...
+      }
+    }
+    // note that if variables declared here,
+    // they are still hoisted to top of function
+    // because we used var keyword.
+    // but because we want to avoid impression to people of other language
+    // that they don't, we write it like this.
   }
 
   function makeJSONCall(endpointAddress, callback){
