@@ -37,7 +37,6 @@ over to get search and get new subjects.
   var $randomSearchButton = $('#randomSearchButton');
   // changes later with detection
   var language = 'en';
-
   // get results dock div
   var $resultsDock = $('#results-dock');
 
@@ -118,13 +117,13 @@ over to get search and get new subjects.
         article.image.source = articleMetaInfo.original.source;
         article.image.height = articleMetaInfo.original.height;
         article.image.width = articleMetaInfo.original.width;
-        console.log(article.image.source.height);
       } else {
         // add default image
         article.image.source = 'assets/page-cc.svg';
       }
       // pass in to createResultsDiv function
       $resultsDock.append(createResultsDiv(article, i));
+      resultsPopulated = true;
     }
     console.log(results);
   }
@@ -230,12 +229,22 @@ over to get search and get new subjects.
     }
   }
 
-function searchAction(evt){
-    // disable search until we get data
-    $subjectSearchField.prop("disabled", true);
-    //query the subject- get value when searched.
-    $subjectSearch = $('#subject-name').val();
-    wikipediaQuery($subjectSearch);
+  function clearPassedResults(){
+    $resultsDock.empty();
+  }
+
+  function searchAction(evt){
+      if ($resultsDock.children().length > 0){
+        console.log(resultsPopulated);
+        resultsPopulated = false;
+        console.log(resultsPopulated);
+        clearPassedResults();
+      }
+      // disable search until we get data
+      $subjectSearchField.prop("disabled", true);
+      //query the subject- get value when searched.
+      $subjectSearch = $('#subject-name').val();
+      wikipediaQuery($subjectSearch);
   };
 
   // Run when search button clicked and new subject submitted
@@ -247,12 +256,12 @@ function searchAction(evt){
     randomSubjectPopulate();
   });
 
-// turn subjectSearchField to white on focus if not white
-$($subjectSearchField).on('focus', function(evt) {
-  if($subjectSearchField.css('background-color') === 'rgba(255, 215, 0, 0.3)'){
-    $subjectSearchField.css('background-color', 'white');
-  }
-});
+  // turn subjectSearchField to white on focus if not white
+  $($subjectSearchField).on('focus', function(evt) {
+    if($subjectSearchField.css('background-color') === 'rgba(255, 215, 0, 0.3)'){
+      $subjectSearchField.css('background-color', 'white');
+    }
+  });
 
   // Press Enter button for search
   $($subjectSearchField).on('keyup keypress', function(evt) {
