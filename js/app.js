@@ -118,12 +118,10 @@ over to get search and get new subjects.
         article.image.source = articleMetaInfo.original.source;
         article.image.height = articleMetaInfo.original.height;
         article.image.width = articleMetaInfo.original.width;
-        console.log('thumbnail!');
         console.log(article.image.source.height);
       } else {
         // add default image
         article.image.source = 'assets/page-cc.svg';
-        console.log('default!');
       }
       // pass in to createResultsDiv function
       $resultsDock.append(createResultsDiv(article, i));
@@ -176,6 +174,7 @@ over to get search and get new subjects.
     + '&gsrnamespace=0'
     + '&gsrsearch=' + subject
     + '&gsrlimit=10'
+    + '&gsrqiprofile=wsum_inclinks_pv'
     + '&prop=pageimages|extracts|info'
     + '&piprop=name|original|thumbnail'
     + '&pilimit=max'
