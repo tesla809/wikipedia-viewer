@@ -1,6 +1,8 @@
 /*
 features to add:
-- create div for output
+- margin space at the end of results dock
+- clear last results when searching for new results
+- Add funny things inside of random search, aka lil ski mask
 - get default image for non image articles.
 - see if all images have thumbnail verison to reduce loading time of big pics
 - figure out best way to get ideal language for person
@@ -161,23 +163,37 @@ over to get search and get new subjects.
     subject = encodeURIComponent(subject);
     // construct path
     var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?'
-    + 'action=query'
-    + '&format=json'
-    + '&prop=pageimages'
-    + '%7Cinfo%7Cextracts'
-    + '&meta=&continue=gapcontinue%7C%7C'
-    + '&generator=allpages'
-    + '&utf8=1'
-    + '&piprop=name%7Coriginal'
-    + '&pithumbsize=100'
-    + '&inprop=url%7Cdisplaytitle'
-    + '&exsentences=3'
-    + '&exintro=1'
-    + '&explaintext=1'
-    + '&exsectionformat=plain'
-    + '&gapfrom=' + subject
-    + '&gapfilterredir=nonredirects'
-    + '&gaplimit=25';
+    +'format=json'
+    + '&action=query'
+    + '&generator=search'
+    + '&gsrnamespace=0'
+    + '&gsrsearch=' + subject
+    + '&gsrlimit=10'
+    + '&prop=pageimages|extracts'
+    + '&pilimit=max'
+    + '&exintro'
+    + '&explaintext'
+    + '&exsentences=1'
+    + '&exlimit=max'
+
+
+    // + 'action=query'
+    // + '&format=json'
+    // + '&prop=pageimages'
+    // + '%7Cinfo%7Cextracts'
+    // + '&meta=&continue=gapcontinue%7C%7C'
+    // + '&generator=allpages'
+    // + '&utf8=1'
+    // + '&piprop=name%7Coriginal'
+    // + '&pithumbsize=100'
+    // + '&inprop=url%7Cdisplaytitle'
+    // + '&exsentences=3'
+    // + '&exintro=1'
+    // + '&explaintext=1'
+    // + '&exsectionformat=plain'
+    // + '&gapfrom=' + subject
+    // + '&gapfilterredir=nonredirects'
+    // + '&gaplimit=25';
 
 // /w/api.php?action=query&format=json&prop=pageimages%7Cinfo%7Cextracts&continue=gapcontinue%7C%7C&generator=allpages&utf8=1&piprop=name%7Coriginal&inprop=url%7Cdisplaytitle&exsentences=3&exintro=1&explaintext=1&exsectionformat=wiki&gapfrom=Allah&gapcontinue=Allah-Las&gapfilterredir=nonredirects&gaplimit=10
 
@@ -193,9 +209,6 @@ over to get search and get new subjects.
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
 
-    // to json
-    var strin = wikipediaEndPoint;
-    console.log(strin);
     // get data and do something with it
     makeJSONCall(wikipediaEndPoint, processWikiData);
   }
