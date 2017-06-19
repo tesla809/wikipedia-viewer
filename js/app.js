@@ -79,7 +79,7 @@ over to get search and get new subjects.
       });
       var $articleImageImgTag = $("<img />",{
         src: articleObj.image.source,
-        class: "article-image"
+        class: "article-image",
       });
       var $articleTextContainerDiv = $("<div/>", {
         class: "article-text-container"
@@ -114,12 +114,16 @@ over to get search and get new subjects.
 
       // check if has image and output.
       if (articleMetaInfo.hasOwnProperty('original')){
+        // add thumbnail
         article.image.source = articleMetaInfo.original.source;
         article.image.height = articleMetaInfo.original.height;
         article.image.width = articleMetaInfo.original.width;
+        console.log('thumbnail!');
+        console.log(article.image.source.height);
       } else {
         // add default image
-        // ...
+        article.image.source = 'assets/page-cc.svg';
+        console.log('default!');
       }
       // pass in to createResultsDiv function
       $resultsDock.append(createResultsDiv(article, i));
@@ -173,7 +177,7 @@ over to get search and get new subjects.
     + '&gsrsearch=' + subject
     + '&gsrlimit=10'
     + '&prop=pageimages|extracts|info'
-    + '&piprop=name%7Coriginal'
+    + '&piprop=name|original|thumbnail'
     + '&pilimit=max'
     + '&inprop=url|displaytitle'
     + '&exintro'
