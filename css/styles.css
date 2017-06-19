@@ -24,6 +24,21 @@ body {
   font-weight: 300;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+a:active {
+  text-decoration: none;
+  color: black;
+}
+
 .wrapper {
   width: 650px;
   text-align: center;
@@ -79,10 +94,10 @@ ul {
   color: rgba(255,250,250,1);
 }
 
-#submit{
+#submitSearchButton{
 }
 
-#submit:hover{
+#submitSearchButton:hover{
 }
 
 /* This is the text inside the search field */
@@ -136,6 +151,70 @@ input {
   font-family: 'Roboto Mono',helvetica,arial,sans-serif;
   text-align: center;
   line-height: 350%;
+}
+
+.article-link-container {
+  display: block;
+  font-size: 13px;
+  line-height: 16px;
+  padding-bottom: 2px;
+  overflow: visble;
+  text-overflow: ellipsis;
+  border: 1px rgba(0,0,0,0.1) solid;
+
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.article-link-container:hover {
+  background-color: rgba(245,245,245, 0.8);
+}
+.article-image-container{
+  /* border: 1px rgba(0,0,0,0.1) solid; */
+  width: 125px;
+  height: 125px;
+  padding-top:12.5px;
+  height:125px;
+  width:125px;
+}
+
+.article-image {
+  margin:auto;
+  width:100px;
+  height:100px;
+}
+
+.article-text-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -webkit-justify-content: center;
+  justify-content: center;
+
+  text-align: left;
+}
+
+.article-text-container > p {
+  margin:1px;
+}
+
+
+.article-title {
+
+}
+
+.article-description {
+
 }
 
 #weather-dock {
