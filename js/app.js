@@ -1,14 +1,10 @@
 /*
 features to add:
 - margin space at the end of results dock
-- clear last results when searching for new results
+- try to eliminate redirects, aka 'may refer to:...' articles
+- add subjects related to part at end of search
 - fix css when limited info in paragraph is there it centers
-- add more space between text and images
-- Add funny things inside of random search, aka lil ski mask
-- get default image for non image articles.
-- see if all images have thumbnail verison to reduce loading time of big pics
 - figure out best way to get ideal language for person
-- get better default parameter.
 - add easter eggs inside of random search like lil ski mask goof.
 - refactor everything to react
 
@@ -40,12 +36,6 @@ over to get search and get new subjects.
   // get results dock div
   var $resultsDock = $('#results-dock');
 
-  // if location search needed,
-  // get iffe function from weather app and place here
-  // this is where query info goes.
-  // insert query data here
-  // https://www.youtube.com/watch?v=pn5eOoJF8bw
-  // see at 10:12
   function processWikiData(data, status, xhr){
     // data
     var results = data.query.pages;
@@ -100,7 +90,6 @@ over to get search and get new subjects.
       $articleTextContainerDiv.append($articleTitleH5Tag);
       $articleTextContainerDiv.append($articleDescriptionPTag);
 
-      console.log($resultHolderDiv);
       return $resultHolderDiv;
     }
 
@@ -109,7 +98,6 @@ over to get search and get new subjects.
       article.link = articleMetaInfo.canonicalurl;
       article.title = articleMetaInfo.title;
       article.summary = articleMetaInfo.extract;
-      console.log(articleMetaInfo);
 
       // check if has image and output.
       if (articleMetaInfo.hasOwnProperty('original')){
@@ -230,16 +218,13 @@ over to get search and get new subjects.
   }
 
   function clearPassedResults(){
-    $resultsDock.empty();
+    if ($resultsDock.children().length > 0){
+      $resultsDock.empty();
+    }
   }
 
   function searchAction(evt){
-      if ($resultsDock.children().length > 0){
-        console.log(resultsPopulated);
-        resultsPopulated = false;
-        console.log(resultsPopulated);
-        clearPassedResults();
-      }
+      clearPassedResults();
       // disable search until we get data
       $subjectSearchField.prop("disabled", true);
       //query the subject- get value when searched.
@@ -253,6 +238,7 @@ over to get search and get new subjects.
   });
 
   $($randomSearchButton).click(function(evt){
+    clearPassedResults();
     randomSubjectPopulate();
   });
 
