@@ -2,9 +2,11 @@
 features to add:
 - create div for output
 - get default image for non image articles.
+- see if all images have thumbnail verison to reduce loading time of big pics
 - figure out best way to get ideal language for person
 - get better default parameter.
 - add easter eggs inside of random search like lil ski mask goof.
+- refactor everything to react
 
 Style:
 - style of div is like google's suggested location on maps like this:
@@ -57,28 +59,47 @@ over to get search and get new subjects.
       }
     }
 
-    function createResultsDiv(obj, i){
+    function createResultsDiv(articleObj, i){
       // elements
-      var finalResultsDiv;
+      var $resultHolderDiv = $("<div/>", {
+        id: "result-holder-" + i
+      });
+      var $articleAnchorTag = $("<a></a>", {
+        href: articleObj.link
+      });
+      var $articleLinkContainerDiv = $("<div/>", {
+        class: "article-link-container"
+      });
+      var $articleImageContainerDiv = $("<div/>", {
+        class: "article-image-container"
+      });
+      var $articleImageImgTag = $("<img />",{
+        src: articleObj.image.source,
+        class: "article-image"
+      });
+      var $articleTextContainerDiv = $("<div/>", {
+        class: "article-text-container"
+      });
+      var $articleTitleH5Tag = $("<h5></h5>", {
+        text: articleObj.title,
+        class: "article-title"
+      });
+      var $articleDescriptionPTag = $("<p></p>",{
+        text: articleObj.summary,
+        class: "article-description"
+      });
 
-      var resultHolderDiv;
-      var articleAnchorTag;
-      var articleLinkContainerDiv;
-      var articleImageContainerDiv;
-      var articleImageImgTag;
-      var articleTextContainerDiv;
-      var articleTitleH5Tag;
-      var articleDescriptionPTag;
+      $resultHolderDiv.append($articleAnchorTag);
+      $articleAnchorTag.append($articleLinkContainerDiv);
+      $articleLinkContainerDiv.append($articleImageContainerDiv);
+      $articleImageContainerDiv.append($articleImageImgTag);
+      $articleLinkContainerDiv.append($articleTextContainerDiv);
+      $articleTextContainerDiv.append($articleTitleH5Tag);
+      $articleTextContainerDiv.append($articleDescriptionPTag);
 
-      return finalResultDiv;
+      console.log($resultHolderDiv);
+      return $resultHolderDiv;
     }
-
-    // everything links
-    // then info is added
-    // then that div is added to main results div
-    // if error occurs, then copy to new variable before adding
-
-    console.log(results);
 
     for (var i = 0; i < resultsKeysArr.length; i++){
       articleMetaInfo = results[resultsKeysArr[i]];
@@ -86,31 +107,19 @@ over to get search and get new subjects.
       article.title = articleMetaInfo.title;
       article.summary = articleMetaInfo.extract;
       console.log(articleMetaInfo);
-      console.log(article.link);
-      console.log(article.title);
-      console.log(article.summary);
 
-      // check if has image and output images.
+      // check if has image and output.
       if (articleMetaInfo.hasOwnProperty('original')){
         article.image.source = articleMetaInfo.original.source;
         article.image.height = articleMetaInfo.original.height;
         article.image.width = articleMetaInfo.original.width;
-
-        console.log(article.image.source);
-        console.log(article.image.height);
-        console.log(article.image.width);
-        // pass in to createResultsDiv function
       } else {
         // add default image
         // ...
-        // pass in to createResultsDiv function
       }
+      // pass in to createResultsDiv function
+      $resultsDock.append(createResultsDiv(article, i));
     }
-    // note that if variables declared here,
-    // they are still hoisted to top of function
-    // because we used var keyword.
-    // but because we want to avoid impression to people of other language
-    // that they don't, we write it like this.
   }
 
   function makeJSONCall(endpointAddress, callback){
