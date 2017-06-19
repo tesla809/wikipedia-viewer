@@ -1,12 +1,16 @@
 /*
 features to add:
-- request links and photos as well
-- get data out of json response.
+- create div for output
+- get default image for non image articles.
 - figure out best way to get ideal language for person
 - get better default parameter.
+- add easter eggs inside of random search like lil ski mask goof.
 
 Style:
--Add wikipedia icon in back
+- style of div is like google's suggested location on maps like this:
+https://www.google.com/search?q=ice+cream&oq=ice+cream
+-when hover it gets a bit darker
+- underline display
 - When info is fetched, the search screen fades
 and the search list is found.
 - at the very top the search and random icons can be hovered
@@ -38,45 +42,68 @@ over to get search and get new subjects.
   // https://www.youtube.com/watch?v=pn5eOoJF8bw
   // see at 10:12
   function processWikiData(data, status, xhr){
-    // var pagesResults = $('<div id="pageResults"></div>');
-    // $resultsDock.append(pagesResults);
-    // console.log($resultsDock);
+    // data
     var results = data.query.pages;
     var resultsKeysArr = Object.keys(results);
     var articleMetaInfo;
-    var articleLink;
-    var articleTitle;
-    var articleSummary;
-    var articleImage;
-    var articleImageSource;
-    var articleImageDimensions;
+    var article = {
+      link: null,
+      title: null,
+      summary: null,
+      image: {
+        source: null,
+        width: null,
+        height: null
+      }
+    }
+
+    function createResultsDiv(obj, i){
+      // elements
+      var finalResultsDiv;
+
+      var resultHolderDiv;
+      var articleAnchorTag;
+      var articleLinkContainerDiv;
+      var articleImageContainerDiv;
+      var articleImageImgTag;
+      var articleTextContainerDiv;
+      var articleTitleH5Tag;
+      var articleDescriptionPTag;
+
+      return finalResultDiv;
+    }
+
+    // everything links
+    // then info is added
+    // then that div is added to main results div
+    // if error occurs, then copy to new variable before adding
 
     console.log(results);
 
     for (var i = 0; i < resultsKeysArr.length; i++){
       articleMetaInfo = results[resultsKeysArr[i]];
-      articleLink = articleMetaInfo.canonicalurl;
-      articleTitle = articleMetaInfo.title;
-      articleSummary = articleMetaInfo.extract;
+      article.link = articleMetaInfo.canonicalurl;
+      article.title = articleMetaInfo.title;
+      article.summary = articleMetaInfo.extract;
       console.log(articleMetaInfo);
-      console.log(articleLink);
-      console.log(articleTitle);
-      console.log(articleSummary);
+      console.log(article.link);
+      console.log(article.title);
+      console.log(article.summary);
 
-      // check if has image
+      // check if has image and output images.
       if (articleMetaInfo.hasOwnProperty('original')){
-        articleImage = articleMetaInfo.original;
-        articleImageSource = articleImage.source;
-        articleImageDimensions = {
-          height: articleImage.height,
-          width: articleImage.width
-        };
-        console.log(articleImage);
-        console.log(articleImageSource);
-        console.log(articleImageDimensions);
+        article.image.source = articleMetaInfo.original.source;
+        article.image.height = articleMetaInfo.original.height;
+        article.image.width = articleMetaInfo.original.width;
+
+        console.log(article.image.source);
+        console.log(article.image.height);
+        console.log(article.image.width);
+        // pass in to createResultsDiv function
       } else {
         // add default image
         // ...
+        // pass in to createResultsDiv function
       }
     }
     // note that if variables declared here,
@@ -180,7 +207,7 @@ over to get search and get new subjects.
 function searchAction(evt){
     // disable search until we get data
     $subjectSearchField.prop("disabled", true);
-    //query the subject- why did I do this?
+    //query the subject- get value when searched.
     $subjectSearch = $('#subject-name').val();
     wikipediaQuery($subjectSearch);
   };
