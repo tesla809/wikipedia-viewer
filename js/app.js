@@ -2,6 +2,8 @@
 features to add:
 - margin space at the end of results dock
 - clear last results when searching for new results
+- fix css when limited info in paragraph is there it centers
+- add more space between text and images
 - Add funny things inside of random search, aka lil ski mask
 - get default image for non image articles.
 - see if all images have thumbnail verison to reduce loading time of big pics
@@ -122,6 +124,7 @@ over to get search and get new subjects.
       // pass in to createResultsDiv function
       $resultsDock.append(createResultsDiv(article, i));
     }
+    console.log(results);
   }
 
   function makeJSONCall(endpointAddress, callback){
@@ -169,14 +172,16 @@ over to get search and get new subjects.
     + '&gsrnamespace=0'
     + '&gsrsearch=' + subject
     + '&gsrlimit=10'
-    + '&prop=pageimages|extracts'
+    + '&prop=pageimages|extracts|info'
+    + '&piprop=name%7Coriginal'
     + '&pilimit=max'
+    + '&inprop=url|displaytitle'
     + '&exintro'
     + '&explaintext'
     + '&exsentences=1'
-    + '&exlimit=max'
+    + '&exlimit=max';
 
-
+    // old query string
     // + 'action=query'
     // + '&format=json'
     // + '&prop=pageimages'
@@ -195,11 +200,7 @@ over to get search and get new subjects.
     // + '&gapfilterredir=nonredirects'
     // + '&gaplimit=25';
 
-// /w/api.php?action=query&format=json&prop=pageimages%7Cinfo%7Cextracts&continue=gapcontinue%7C%7C&generator=allpages&utf8=1&piprop=name%7Coriginal&inprop=url%7Cdisplaytitle&exsentences=3&exintro=1&explaintext=1&exsectionformat=wiki&gapfrom=Allah&gapcontinue=Allah-Las&gapfilterredir=nonredirects&gaplimit=10
-
-    // first attempt with open search, no pictures, would have to make 2 calls
-    // this and then wait on the other call for images.
-    // if no images then we can just use this
+    // original open serach with good results
     // + 'action=opensearch'
     // + '&search=' + subject
     // + '&limit=25'
