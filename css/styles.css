@@ -31,7 +31,7 @@ a:active {
   color: black;
 }
 
-/* this could be the issue with the centering in github pages*/
+/* this could be the issue with the centering in github pages */
 .wrapper {
   width: 650px;
   text-align: center;
@@ -166,12 +166,6 @@ input {
 #results-dock {
   margin-bottom: 50px;
 }
-
-.data {
-  display: inline-block;
-  margin-right: 150px;
-}
-
 
 /* fix things when they are in smaller screen with media query */
 @media (max-width: 950px) and (min-width: 300px) {
