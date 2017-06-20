@@ -164,7 +164,7 @@ input {
 }
 
 #results-dock {
-  margin-bottom: 50px;
+  margin-bottom: 20%;
 }
 
 /* fix things when they are in smaller screen with media query */
