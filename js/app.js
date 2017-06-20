@@ -1,12 +1,22 @@
 /*
 features to add:
+- add random search term in search area
+- change search parameter to make it more relavent
+- add extract charater limit with ellipsis to make run-on sentences shorter
+- Wikipedia 1 Random article on start... did you know that?
+- fix centering issue with github pages
 - margin space at the end of results dock
 - try to eliminate redirects, aka 'may refer to:...' articles
 - add subjects related to part at end of search
 - fix css when limited info in paragraph is there it centers
 - figure out best way to get ideal language for person
 - add easter eggs inside of random search like lil ski mask goof.
-- refactor everything to react
+- refactor to use npm
+- create new file and refactor everything to react
+- Add AP news feed- like google news
+- add twitter feed?
+- Add search for smart contracts
+- Maybe world bank info
 
 Style:
 - style of div is like google's suggested location on maps like this:
@@ -145,6 +155,8 @@ over to get search and get new subjects.
 
     $.getJSON(addressForRandomSubject).done(function(x){
       var randomSubject = x.query.random[0].title;
+      // add randomSubject value to search field
+      $subjectSearchField.val(randomSubject);
       wikipediaQuery(randomSubject, processWikiData);
     });
   }
