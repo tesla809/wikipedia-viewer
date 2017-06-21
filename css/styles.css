@@ -163,6 +163,10 @@ input {
 
 }
 
+#result-holder-no-info-found {
+  margin-bottom: 7%;
+}
+
 #results-dock {
   margin-bottom: 20%;
 }
