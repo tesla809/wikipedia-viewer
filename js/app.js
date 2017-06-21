@@ -50,8 +50,7 @@ over to get search and get new subjects.
     console.log(data);
 
     if (data.query === undefined){
-      console.log('Nothing found, try again');
-      $resultsDock.append(createNoInfoDiv())
+      $resultsDock.append(createNoInfoDiv());
     } else {
         var results = data.query.pages;
         var resultsKeysArr = Object.keys(results);
@@ -90,7 +89,6 @@ over to get search and get new subjects.
         console.log(results);
       }
     }
-
     function createNoInfoDiv(){
       var $resultsHolderDiv = $("<div/>", {
         id: "result-holder-no-info-found"
@@ -118,7 +116,7 @@ over to get search and get new subjects.
         class: "article-title"
       });
       var $articleDescriptionPTag = $("<p></p>",{
-        text: 'See related searches below',
+        text: 'See related the searches below',
         class: "article-description"
       });
 
@@ -171,7 +169,7 @@ over to get search and get new subjects.
       $articleTextContainerDiv.append($articleDescriptionPTag);
 
       return $resultHolderDiv;
-  }
+    }
 
   function makeJSONCall(endpointAddress, callback){
     callback = callback || function(x) { console.log(x); }
@@ -204,12 +202,13 @@ over to get search and get new subjects.
       var randomSubject = x.query.random[0].title;
       // add randomSubject value to search field
       $subjectSearchField.val(randomSubject);
-      wikipediaQuery(randomSubject, processWikiData);
+      var endPoint = wikipediaQueryString(randomSubject, 'strict');
+      makeJSONCall(endPoint, processWikiData);
     });
   }
 
   // query API here- get info here
-  function wikipediaQuery(subject){
+  function wikipediaQueryString(subject, searchStyle){
     // convert string to percent encoding
     subject = encodeURIComponent(subject);
     // construct path
@@ -222,7 +221,7 @@ over to get search and get new subjects.
     + '&gpssearch=' + subject
     + '&gpslimit=10'
     // this property is what controls quality of serach
-    + '&gpsprofile=strict'
+    + '&gpsprofile=' + searchStyle
     + '&prop=pageimages|extracts|info'
     + '&piprop=name|original|thumbnail'
     + '&pilimit=max'
@@ -278,8 +277,7 @@ over to get search and get new subjects.
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
 
-    // get data and do something with it
-    makeJSONCall(wikipediaEndPoint, processWikiData);
+    return wikipediaEndPoint;
   }
 
   function handleSearch(evt){
@@ -307,7 +305,8 @@ over to get search and get new subjects.
       $subjectSearchField.prop("disabled", true);
       //query the subject- get value when searched.
       $subjectSearch = $('#subject-name').val();
-      wikipediaQuery($subjectSearch);
+      var endPoint = wikipediaQueryString($subjectSearch, 'strict');
+      makeJSONCall(endPoint, processWikiData);
   };
 
   // Run when search button clicked and new subject submitted
