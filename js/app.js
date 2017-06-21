@@ -49,6 +49,9 @@ over to get search and get new subjects.
     // data
     console.log(data);
 
+    // when successful, search button allowed again
+    $subjectSearchField.prop("disabled", false);
+    
     if (data.query === undefined){
       $resultsDock.append(createNoInfoDiv());
     } else {
@@ -273,9 +276,6 @@ over to get search and get new subjects.
     // + '&limit=25'
     // + '&format=json'
     // + '&callback=?';
-
-    // when successful, search button allowed again
-    $subjectSearchField.prop("disabled", false);
 
     return wikipediaEndPoint;
   }
