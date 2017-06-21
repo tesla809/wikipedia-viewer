@@ -1,7 +1,6 @@
 /*
 features to add:
-- add random search term in search area
-- change search parameter to make it more relavent
+- add exception handler when no results are found: add message-> nothing found, here is something related
 - add extract charater limit with ellipsis to make run-on sentences shorter
 - Wikipedia 1 Random article on start... did you know that?
 - fix centering issue with github pages
@@ -48,18 +47,53 @@ over to get search and get new subjects.
 
   function processWikiData(data, status, xhr){
     // data
-    var results = data.query.pages;
-    var resultsKeysArr = Object.keys(results);
-    var articleMetaInfo;
-    var article = {
-      link: null,
-      title: null,
-      summary: null,
-      image: {
-        source: null,
-        width: null,
-        height: null
+    console.log(data);
+
+    if (data.query === undefined){
+      console.log('Nothing found, try agian');
+    } else {
+        var results = data.query.pages;
+        var resultsKeysArr = Object.keys(results);
+        var articleMetaInfo;
+        var article = {
+          link: null,
+          title: null,
+          summary: null,
+          image: {
+            source: null,
+            width: null,
+            height: null
+          }
+        }
+
+        for (var i = 0; i < resultsKeysArr.length; i++){
+          articleMetaInfo = results[resultsKeysArr[i]];
+          article.link = articleMetaInfo.canonicalurl;
+          article.title = articleMetaInfo.title;
+          article.summary = articleMetaInfo.extract;
+
+          // check if has image and output.
+          if (articleMetaInfo.hasOwnProperty('original')){
+            // add thumbnail
+            article.image.source = articleMetaInfo.original.source;
+            article.image.height = articleMetaInfo.original.height;
+            article.image.width = articleMetaInfo.original.width;
+          } else {
+            // add default image
+            article.image.source = 'assets/page-cc.svg';
+          }
+
+          // pass in to createResultsDiv function
+          $resultsDock.append(createResultsDiv(article, i));
+        }
+        console.log(results);
       }
+    }
+
+    function createNoInfoDiv(){
+      var $resultHolderDiv = $("<div/>", {
+        id: "result-holder-" + i
+      });
     }
 
     function createResultsDiv(articleObj, i){
@@ -101,29 +135,6 @@ over to get search and get new subjects.
       $articleTextContainerDiv.append($articleDescriptionPTag);
 
       return $resultHolderDiv;
-    }
-
-    for (var i = 0; i < resultsKeysArr.length; i++){
-      articleMetaInfo = results[resultsKeysArr[i]];
-      article.link = articleMetaInfo.canonicalurl;
-      article.title = articleMetaInfo.title;
-      article.summary = articleMetaInfo.extract;
-
-      // check if has image and output.
-      if (articleMetaInfo.hasOwnProperty('original')){
-        // add thumbnail
-        article.image.source = articleMetaInfo.original.source;
-        article.image.height = articleMetaInfo.original.height;
-        article.image.width = articleMetaInfo.original.width;
-      } else {
-        // add default image
-        article.image.source = 'assets/page-cc.svg';
-      }
-      // pass in to createResultsDiv function
-      $resultsDock.append(createResultsDiv(article, i));
-      resultsPopulated = true;
-    }
-    console.log(results);
   }
 
   function makeJSONCall(endpointAddress, callback){
@@ -167,13 +178,15 @@ over to get search and get new subjects.
     subject = encodeURIComponent(subject);
     // construct path
     var wikipediaEndPoint = 'https://' + language + '.wikipedia.org/w/api.php?'
-    +'format=json'
+    // 3rd gen
+    + 'format=json'
     + '&action=query'
-    + '&generator=search'
-    + '&gsrnamespace=0'
-    + '&gsrsearch=' + subject
-    + '&gsrlimit=10'
-    + '&gsrqiprofile=wsum_inclinks_pv'
+    + '&generator=prefixsearch'
+    + '&gpsnamespace=0'
+    + '&gpssearch=' + subject
+    + '&gpslimit=10'
+    // this property is what controls quality of serach
+    + '&gpsprofile=strict'
     + '&prop=pageimages|extracts|info'
     + '&piprop=name|original|thumbnail'
     + '&pilimit=max'
@@ -182,6 +195,23 @@ over to get search and get new subjects.
     + '&explaintext'
     + '&exsentences=1'
     + '&exlimit=max';
+
+    // second gen serach endpoint string
+    // + 'format=json'
+    // + '&action=query'
+    // + '&generator=search'
+    // + '&gsrnamespace=0'
+    // + '&gsrsearch=' + subject
+    // + '&gsrlimit=10'
+    // + '&gsrqiprofile=classic_noboostlinks'
+    // + '&prop=pageimages|extracts|info'
+    // + '&piprop=name|original|thumbnail'
+    // + '&pilimit=max'
+    // + '&inprop=url|displaytitle'
+    // + '&exintro'
+    // + '&explaintext'
+    // + '&exsentences=1'
+    // + '&exlimit=max';
 
     // old query string
     // + 'action=query'
