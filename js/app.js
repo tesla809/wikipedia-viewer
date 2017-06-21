@@ -51,9 +51,14 @@ over to get search and get new subjects.
 
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
-    
+
     if (data.query === undefined){
+      // inform info not found
       $resultsDock.append(createNoInfoDiv());
+      // get related info with fuzzy search
+      var noInfoValue = $subjectSearchField.val();
+      var fuzzyEndPoint = wikipediaQueryString(noInfoValue, 'fuzzy');
+      makeJSONCall(fuzzyEndPoint, processWikiData);
     } else {
         var results = data.query.pages;
         var resultsKeysArr = Object.keys(results);
@@ -68,7 +73,6 @@ over to get search and get new subjects.
             height: null
           }
         }
-
         for (var i = 0; i < resultsKeysArr.length; i++){
           articleMetaInfo = results[resultsKeysArr[i]];
           article.link = articleMetaInfo.canonicalurl;
