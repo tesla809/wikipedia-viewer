@@ -1,21 +1,18 @@
 /*
 features to add:
-- add exception handler when no results are found: add message-> nothing found, here is something related
-- add extract charater limit with ellipsis to make run-on sentences shorter
+- add search like google with numbers in bottom and max search?
 - Wikipedia 1 Random article on start... did you know that?
 - fix centering issue with github pages
-- margin space at the end of results dock
-- try to eliminate redirects, aka 'may refer to:...' articles
-- add subjects related to part at end of search
 - fix css when limited info in paragraph is there it centers
 - figure out best way to get ideal language for person
 - add easter eggs inside of random search like lil ski mask goof.
-- refactor to use npm
-- create new file and refactor everything to react
+- try to eliminate redirects, aka 'may refer to:...' articles
 - Add AP news feed- like google news
 - add twitter feed?
 - Add search for smart contracts
 - Maybe world bank info
+- use npm?
+- create new file and refactor everything to react
 
 Style:
 - style of div is like google's suggested location on maps like this:
@@ -227,7 +224,6 @@ over to get search and get new subjects.
     + '&gpsnamespace=0'
     + '&gpssearch=' + subject
     + '&gpslimit=10'
-    // this property is what controls quality of serach
     + '&gpsprofile=' + searchStyle
     + '&prop=pageimages|extracts|info'
     + '&piprop=name|original|thumbnail'
@@ -238,41 +234,34 @@ over to get search and get new subjects.
     + '&exsentences=1'
     + '&exlimit=max';
 
-    // second gen serach endpoint string
-    // + 'format=json'
-    // + '&action=query'
-    // + '&generator=search'
-    // + '&gsrnamespace=0'
-    // + '&gsrsearch=' + subject
-    // + '&gsrlimit=10'
-    // + '&gsrqiprofile=classic_noboostlinks'
-    // + '&prop=pageimages|extracts|info'
-    // + '&piprop=name|original|thumbnail'
-    // + '&pilimit=max'
-    // + '&inprop=url|displaytitle'
-    // + '&exintro'
-    // + '&explaintext'
-    // + '&exsentences=1'
-    // + '&exlimit=max';
+    /* search style aka &gpssearch properties allowed:
+      "The purpose of this module is similar to action=opensearch:
+      to take user input and provide the best-matching titles.
+      Depending on the search engine backend, this might include typo correction,
+      redirect avoidance, or other heuristics."
+      
+      source: https://www.mediawiki.org/w/api.php?action=help&modules=query%2Bprefixsearch
+      Search profile to use.
 
-    // old query string
-    // + 'action=query'
-    // + '&format=json'
-    // + '&prop=pageimages'
-    // + '%7Cinfo%7Cextracts'
-    // + '&meta=&continue=gapcontinue%7C%7C'
-    // + '&generator=allpages'
-    // + '&utf8=1'
-    // + '&piprop=name%7Coriginal'
-    // + '&pithumbsize=100'
-    // + '&inprop=url%7Cdisplaytitle'
-    // + '&exsentences=3'
-    // + '&exintro=1'
-    // + '&explaintext=1'
-    // + '&exsectionformat=plain'
-    // + '&gapfrom=' + subject
-    // + '&gapfilterredir=nonredirects'
-    // + '&gaplimit=25';
+      strict:
+        Strict profile with few punctuation characters removed but diacritics and stress marks are kept.
+      normal:
+        Few punctuation characters, some diacritics and stopwords removed.
+      normal-subphrases:
+        Few punctuation characters, some diacritics and stopwords removed. It will match also subphrases (can be subphrases or subpages depending on internal wiki configuration).
+      fuzzy:
+        Similar to normal with typo correction (two typos supported).
+      fast-fuzzy:
+        Experimental fuzzy profile (may be removed at any time)
+      fuzzy-subphrases:
+        Similar to normal with typo correction (two typos supported). It will match also subphrases (can be subphrases or subpages depending on internal wiki configuration).
+      classic:
+        Classic prefix, few punctuation characters and some diacritics removed.
+
+      One of the following values: strict, normal, normal-subphrases, fuzzy, fast-fuzzy, fuzzy-subphrases, classic
+
+      Default: fuzzy
+    */
 
     // original open serach with good results
     // + 'action=opensearch'
