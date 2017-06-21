@@ -50,7 +50,8 @@ over to get search and get new subjects.
     console.log(data);
 
     if (data.query === undefined){
-      console.log('Nothing found, try agian');
+      console.log('Nothing found, try again');
+      $resultsDock.append(createNoInfoDiv())
     } else {
         var results = data.query.pages;
         var resultsKeysArr = Object.keys(results);
@@ -91,9 +92,44 @@ over to get search and get new subjects.
     }
 
     function createNoInfoDiv(){
-      var $resultHolderDiv = $("<div/>", {
-        id: "result-holder-" + i
+      var $resultsHolderDiv = $("<div/>", {
+        id: "result-holder-no-info-found"
       });
+
+      var $noInfoFound = $("<div/>", {
+        id: "no-info-found",
+        class: "article-link-container"
+      });
+
+      var $articleImageContainerDiv = $("<div/>", {
+        class: "article-image-container"
+      });
+
+      var $articleImageImgTag = $("<img />",{
+        src: 'assets/page-cc.svg',
+        class: "article-image",
+      });
+
+      var $articleTextContainerDiv = $("<div/>", {
+        class: "article-text-container"
+      });
+      var $articleTitleH5Tag = $("<h5></h5>", {
+        text: 'No articles found',
+        class: "article-title"
+      });
+      var $articleDescriptionPTag = $("<p></p>",{
+        text: 'See related searches below',
+        class: "article-description"
+      });
+
+      $resultsHolderDiv.append($noInfoFound);
+      $noInfoFound.append($articleImageContainerDiv);
+      $noInfoFound.append($articleTextContainerDiv);
+      $articleImageContainerDiv.append($articleImageImgTag);
+      $articleTextContainerDiv.append($articleTitleH5Tag);
+      $articleTextContainerDiv.append($articleDescriptionPTag);
+
+      return $resultsHolderDiv;
     }
 
     function createResultsDiv(articleObj, i){
