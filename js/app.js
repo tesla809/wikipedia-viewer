@@ -30,8 +30,7 @@ over to get search and get new subjects.
 - see: https://www.mediawiki.org/wiki/API:Main_page#The_endpoint
 */
 
-// iife module pattern to avoid polluting global namespace
-(function(){
+$(document).ready(function(){
   // global variables
   var $subjectSearchField = $('#subject-name');
   var $subjectSearch = $('#subject-name').val();
@@ -43,12 +42,10 @@ over to get search and get new subjects.
   var $resultsDock = $('#results-dock');
 
   function processWikiData(data, status, xhr){
-    // data
-    console.log(data);
-
     // when successful, search button allowed again
     $subjectSearchField.prop("disabled", false);
 
+    // if not found
     if (data.query === undefined){
       // inform info not found
       $resultsDock.append(createNoInfoDiv());
@@ -239,7 +236,7 @@ over to get search and get new subjects.
       to take user input and provide the best-matching titles.
       Depending on the search engine backend, this might include typo correction,
       redirect avoidance, or other heuristics."
-      
+
       source: https://www.mediawiki.org/w/api.php?action=help&modules=query%2Bprefixsearch
       Search profile to use.
 
@@ -263,13 +260,6 @@ over to get search and get new subjects.
       Default: fuzzy
     */
 
-    // original open serach with good results
-    // + 'action=opensearch'
-    // + '&search=' + subject
-    // + '&limit=25'
-    // + '&format=json'
-    // + '&callback=?';
-
     return wikipediaEndPoint;
   }
 
@@ -288,7 +278,7 @@ over to get search and get new subjects.
 
   function clearPassedResults(){
     if ($resultsDock.children().length > 0){
-      $resultsDock.empty();
+        $resultsDock.empty();
     }
   }
 
@@ -328,4 +318,4 @@ over to get search and get new subjects.
       return false;
     }
   });
-}());
+});
